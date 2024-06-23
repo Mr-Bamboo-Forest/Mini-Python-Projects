@@ -3,36 +3,46 @@ from moviepy.editor import VideoFileClip
 from sys import argv
 import os
 
+# Check if the required number of arguments are provided
+if len(argv) < 3:
+    print("Usage: py ytDownloader.py <link> <usertype>")
+    print("<usertype> should be one of: video (or v), playlist (or p), audiovideo (or av), audioplaylist (or ap)")
+    exit(1)
+
 link = argv[1]
 usertype = argv[2]
 pytype = "nothing rn bro"
 
-if usertype == "video":
+if usertype == "video" or usertype == "v":
     pytype = "mp4"
-elif usertype == "v":
-    pytype = "mp4"
-elif usertype == "playlist":
+elif usertype == "playlist" or usertype == "p":
     pytype = "playlist"
-elif usertype == "p":
-    pytype = "playlist"
-elif usertype == "audiovideo":
+elif usertype == "audiovideo" or usertype == "av":
     pytype = "mp3"
-elif usertype == "av":
-    pytype = "mp3"
-elif usertype == "audioplaylist":
-    pytype = "mp3playlist"
-elif usertype == "ap":
+elif usertype == "audioplaylist" or usertype == "ap":
     pytype = "mp3playlist"
 else:
-    print("womp womp")
+    print(f"Invalid usertype: {usertype} should be one of: video (or v), playlist (or p), audiovideo (or av), audioplaylist (or ap)")
+    exit(1)
+
+download_path = r'C:\Users\Downloads'  # Change this to your desired directory
+
+# Ensure the download path exists
+if not os.path.exists(download_path):
+    try:
+        os.makedirs(download_path)
+    except PermissionError as e:
+        print(f"Error: {e}")
+        print(f"Permission denied to create directory: {download_path}")
+        exit(1)
 
 if pytype == "playlist":
     p = Playlist(link)
     print("Playlist Title: ", p.title)
     videodownloaded = 0
     for video in p.videos:
-        video.streams.first().download('/Users/Downloads') #change according to what directory is wanting to be downloaded to
-        videodownloaded+=1
+        video.streams.first().download(download_path)
+        videodownloaded += 1
         if videodownloaded == 1:
             print(videodownloaded, " video has been downloaded.")
         else: 
@@ -40,16 +50,16 @@ if pytype == "playlist":
                   
 elif pytype == "mp4":
     yt = YouTube(link)
-    print("Title: ", yt.title )
+    print("Title: ", yt.title)
     yd = yt.streams.get_highest_resolution()
-    yd.download('/Users/Downloads') #change according to what directory is wanting to be downloaded to
+    yd.download(download_path)
     print("Done Downloading, ", yt.title)
 
-elif pytype =="mp3":
+elif pytype == "mp3":
     m = YouTube(link)
     print("Title: ", m.title)
     mv = m.streams.filter(only_audio=True).first()
-    out_file = mv.download('/Users/Downloads') #change according to what directory is wanting to be downloaded to
+    out_file = mv.download(download_path)
     base, ext = os.path.splitext(out_file)
     new_file = base + '.mp3'
     os.rename(out_file, new_file)
@@ -59,9 +69,8 @@ elif pytype == "mp3playlist":
     pv = Playlist(link)
     print("Playlist Title: ", pv.title)
     videodownloaded = 0
-    download_dir = '/Users/Downloads' # Change to desired directory
     for video in pv.videos:
-        out_file = video.streams.first().download(download_dir)
+        out_file = video.streams.first().download(download_path)
         base, ext = os.path.splitext(out_file)
         new_file = base + '.mp3'
         video_clip = VideoFileClip(out_file)
@@ -78,6 +87,7 @@ elif pytype == "mp3playlist":
 
 else: 
     print("womp womp womp")
+
 
 
 #to use, ensure that vsc is being used: pytube, moviepy and venv are downloaded and use this in the terminal ctrl+shift+` 
