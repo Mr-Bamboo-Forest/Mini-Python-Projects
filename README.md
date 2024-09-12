@@ -7,5 +7,5 @@ Most of these will be copied and pasted from my private files but made so that l
 - Proof Of Concept Snake Game
 - YouTube Downloader
 - TKINTER Calculator
-- Sudoku Solver (for some reason it doesn't work in a folder)
+- Sudoku Solver
 
