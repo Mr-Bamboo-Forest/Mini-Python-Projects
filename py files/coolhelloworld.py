@@ -2,7 +2,7 @@ import string
 from time import sleep
 
 def cool():
-    target = "Hello World!"
+    target = "Hello World!" # you can change this to whatever you want (including any special english characters)
     result = "" 
 
     for char in target:
