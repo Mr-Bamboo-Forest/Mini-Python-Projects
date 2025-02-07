@@ -6,13 +6,12 @@ def cool():
     result = "" 
 
     for char in target:
-        for letter in (string.ascii_letters + " !"): 
+        for letter in string.printable: 
             current_guess = result + letter
             print(current_guess)
-            sleep(0.03)
+            sleep(0.005)
 
             if letter == char:
                 result += letter
                 break  
-
 cool()
