@@ -20,6 +20,11 @@ questions = [
         "prompt": "Who wrote 'To Kill a Mockingbird'?",
         "options": ["A. Harper Lee", "B. Mark Twain", "C. J.K. Rowling", "D. Ernest Hemingway"],
         "answer": "A"
+    },
+    {
+        "prompt": "Which player scored 5 goals in 9 minutes?",
+        "options": ["A. Leo Messi", "B. Cristiano Ronaldo", "C. Robert Lewandowski", "D. No one, that's too difficult"],
+        "answer": "C"
     }
 ]
 
@@ -29,7 +34,7 @@ def run_quiz(questions): # takes questions as the parameter of the function
         print(i["prompt"]) #Prints the prompt of the current question
         for option in i["options"]: # Prints each option of the current question, each on a new line
             print(option)
-        answer = input("Enter your answer (A, B, C, or D): ").upper() # changes the input into uppercase
+        answer = input("Enter your answer (A, B, C, or D): ").upper() # changes the input into uppercase to ensure any un-capitalised cases are picked up
         if answer == i["answer"]:# Checks if the user's answer matches the correct answer
             print("Correct!\n") #prints correct
             score += 1 #adds one to the score
